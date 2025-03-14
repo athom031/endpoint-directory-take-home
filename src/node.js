@@ -1,7 +1,7 @@
 class Node { 
     /**
-     * Constructor to initialize a node with a name.
-     * @param {string} name - The name of the node.
+     * Constructor to initialize a node with a name
+     * @param {string} name - The name of the node
      */
     constructor(name) {
         this.name = name;
@@ -10,25 +10,25 @@ class Node {
     }
 
     /**
-     * Sets the parent node.
-     * @param {Node} parent - The parent node.
+     * Sets the parent node
+     * @param {Node} parent - The parent node
      */
     setParent(parent) {
         this.parent = parent;
     }
 
     /**
-     * Checks if the node has a child with the specified name.
-     * @param {string} name - The name of the child node to check.
-     * @returns {boolean} - True if the child exists, otherwise false.
+     * Checks if the node has a child with the specified name
+     * @param {string} name - The name of the child node to check
+     * @returns {boolean} - True if node has child with that name, false otherwise
      */
     hasChild(name) {
         return this.children.has(name);
     }
 
     /**
-     * Adds a child node to the current node.
-     * @param {Node} node - The child node to add.
+     * Adds a child node to the current node
+     * @param {Node} node - The child node to add to current parent node
      */
     addChild(node) {
         node.setParent(this);
@@ -36,8 +36,8 @@ class Node {
     }
 
     /**
-     * Removes a child node by name.
-     * @param {string} name - The name of the child node to remove.
+     * Removes a child node by name
+     * @param {string} name - The name of the child node to remove
      */
     removeChild(name) {
         this.children.delete(name);
