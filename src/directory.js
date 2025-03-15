@@ -129,24 +129,4 @@ class Directory {
     }
 }
 
-const tree = new Directory();
-// follow given test
-tree.create('fruits');
-tree.create('vegetables');
-tree.create('grains');
-tree.create('fruits/apples');
-tree.create('fruits/apples/fuji');
-tree.list();
-// so far so good 
-tree.create('grains/squash');
-tree.move('grains/squash', 'vegetables');
-tree.create('foods');  
-tree.move('grains', 'foods');
-tree.move('fruits', 'foods');
-tree.move('vegetables', 'foods');
-tree.list();
-// so far so good
-tree.delete('fruits/apples');
-tree.delete('foods/fruits/apples');
-tree.list();
-// yay! passed given test case 
+module.exports = Directory;
