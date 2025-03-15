@@ -20,9 +20,9 @@ This design allows us to create a scalable directory structure, with operations 
 ### Assumptions
 In this challenge, the input is provided via a file (`input.txt`), which simulates multiple commands being executed in sequence. The program will read each line from the file and perform the corresponding action on the directory tree. Here is an example of the input and expected behavior:
 
-### Example Input (`input.txt`):
-
-### Example Output(`outputDemo.txt`);
+### Example Input and Output
+- **Input**: You can find an example of the input commands in the `input.txt` file [here](./input.txt).
+- **Output**: The expected output can be found in the `outputDemo.txt` file [here](./outputDemo.txt).
 
 ### Running the Application
 
