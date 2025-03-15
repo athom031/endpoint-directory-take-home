@@ -51,8 +51,12 @@ class Directory {
         if(node !== this.root) {
             console.log(`${indent}${node.name}`);
         }
-        
-        for(const child of node.children.values()) {
+     
+        // ASSUMPTION: list children in alphabetical order (like a normal file directory)
+        const sortedChildren = [...node.children.values()].sort((a, b) => a.name.localeCompare(b.name));
+
+
+        for(const child of sortedChildren) {
             this.list(child, depth + 1);
         }
     }
@@ -70,7 +74,8 @@ class Directory {
             if(currFromNode.hasChild(part)) {
                 currFromNode = currFromNode.children.get(part);
             } else {
-                console.error(`ERROR: Cannot move ${fromPath} to ${toPath}.\n${fromPath} is not valid path in current directory.`);
+                // ASSUMPTION: handle invalid path same as given in DELETE error path example
+                console.error(`Cannot move ${fromPath} to ${toPath} - ${part} does not exist`);
                 return;
             }
         } 
@@ -82,7 +87,8 @@ class Directory {
             if(currToNode.hasChild(part)) {
                 currToNode = currToNode.children.get(part);
             } else {
-                console.error(`ERROR: Cannot move ${fromPath} to ${toPath}.\n${toPath} is not valid path in current directory.`);
+                // ASSUMPTION: handle invalid path same as given in DELETE error path example
+                console.error(`Cannot move ${fromPath} to ${toPath} - ${part} does not exist`);
                 return;
             }
         }
@@ -93,13 +99,54 @@ class Directory {
         // Now we can properly move the node to its new parent 
         currToNode.addChild(currFromNode);
     }
+
+    /**
+     * Delete a node from the directory tree
+     * @param {string} path - The path of node to remove (ie: 'fruits/apples/fuji')
+     */
+    delete(path) {
+        // handle deletion of root 
+        if(path === '') {
+            this.root = new Node('');
+            return;
+        }
+        
+        const parts = this._splitPath(path);
+        
+        let curr = this.root;
+
+        for (const part of parts) {
+            if(curr.hasChild(part)) {
+                curr = curr.children.get(part);
+            } else {
+                console.error(`ERROR: Cannot delete ${path} - ${part} does not exist`);
+                return;
+            }
+        }
+        
+        // So we traversed the path now lets delete this child from its parent (similar to move)
+        curr.parent.removeChild(curr.name);        
+    }
 }
 
 const tree = new Directory();
+// follow given test
 tree.create('fruits');
+tree.create('vegetables');
+tree.create('grains');
 tree.create('fruits/apples');
 tree.create('fruits/apples/fuji');
-tree.create('vegetables');
 tree.list();
-tree.move('fruits/apples/fuji', 'vegetables');
+// so far so good 
+tree.create('grains/squash');
+tree.move('grains/squash', 'vegetables');
+tree.create('foods');  
+tree.move('grains', 'foods');
+tree.move('fruits', 'foods');
+tree.move('vegetables', 'foods');
 tree.list();
+// so far so good
+tree.delete('fruits/apples');
+tree.delete('foods/fruits/apples');
+tree.list();
+// yay! passed given test case 
